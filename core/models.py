@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.html import format_html
 
 
 class GithubUser(models.Model):
@@ -20,3 +21,13 @@ class GithubUser(models.Model):
     received_events_url = models.URLField()
     type = models.CharField(max_length=256)
     site_admin = models.BooleanField()
+
+    def __str__(self):
+        return self.login
+
+    def image(self):
+        if self.avatar_url:
+            return format_html('<img src="%s" />' % self.avatar_url)
+        else:
+            return '(Sin imagen)'
+    image.short_description = 'Thumb'

@@ -22,12 +22,11 @@ class SearchUser(ListView):
             text = form.cleaned_data.get('text')
             r = requests.get('https://api.github.com/search/users?q=' + text)
             json = r.json()
-            print(json)
-            serializer = UserSearchSerializer(data=json)
+            serializer = UserSearchSerializer(data=json["items"], many=True)
             if serializer.is_valid():
                 users = serializer.save()
-                return render(request, self.template_name, {'users': users})
-        return render(request, 'search_user_display.html', {'form': form})
+                return render(request, 'search_user_display.html', {'users': users})
+        return render(request, self.template_name, {'form': form})
 
 
 
