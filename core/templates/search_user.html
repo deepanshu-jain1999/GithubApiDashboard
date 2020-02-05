@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+    <h1>Search User by text and can filter with minimum repository and with minimum followers</h1>
     <form method="post">
         {% csrf_token %}
         {{ form }}

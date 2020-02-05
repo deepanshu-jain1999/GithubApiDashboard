@@ -20,7 +20,13 @@ class SearchUser(ListView):
         form = self.form_class(self.request.POST)
         if form.is_valid():
             text = form.cleaned_data.get('text')
-            r = requests.get('https://api.github.com/search/users?q=' + text)
+            min_followers = str(form.cleaned_data.get('min_followers'))
+            min_repo = str(form.cleaned_data.get('min_repository'))
+            url = 'https://api.github.com/search/users?q='
+            url += text
+            url += '+repos:%3E'+min_repo
+            url += '+followers:%3E'+min_followers
+            r = requests.get(url)
             json = r.json()
             serializer = UserSearchSerializer(data=json["items"], many=True)
             if serializer.is_valid():
