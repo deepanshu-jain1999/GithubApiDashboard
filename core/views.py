@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 import requests
-
 from . import forms
 from .serializer import UserSearchSerializer
-
-
+from .models import GithubUser
+from django.utils import timezone
 # Create your views here.
 
 class SearchUser(ListView):
@@ -28,11 +27,10 @@ class SearchUser(ListView):
             url += '+followers:%3E'+min_followers
             r = requests.get(url)
             json = r.json()
+            # print(json)
             serializer = UserSearchSerializer(data=json["items"], many=True)
             if serializer.is_valid():
                 users = serializer.save()
                 return render(request, 'search_user_display.html', {'users': users})
+            print(serializer.instance)
         return render(request, self.template_name, {'form': form})
-
-
-

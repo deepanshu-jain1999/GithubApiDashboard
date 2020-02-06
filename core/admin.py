@@ -1,9 +1,12 @@
 from django.contrib import admin
 from core import models
 
+
 class GitHubUserAdmin(admin.ModelAdmin):
-    search_fields = ['login', 'created_at']
-    list_display = ('image', 'login', 'created_at')
+    date_hierarchy = 'created_at'
+    date_hierarchy_drilldown = False
+    search_fields = ['login', 'created_at', 'updated_at']
+    list_display = ('image', 'login', 'created_at', 'updated_at')
     # list_display_links = ('id', 'patient', 'booking_slot', 'token_number',)
     ordering = ('id',)
 

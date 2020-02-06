@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import GithubUser
+from django.utils import timezone
 
 
 class UserSearchSerializer(serializers.ModelSerializer):
@@ -13,5 +14,6 @@ class UserSearchSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        instance, _ = GithubUser.objects.get_or_create(**validated_data)
+        instance = GithubUser.objects.create_or_update(**validated_data)
         return instance
+
