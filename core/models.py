@@ -35,4 +35,12 @@ class GithubUser(models.Model):
     image.short_description = 'Thumb'
 
 
+class AllSearch(models.Model):
+    text = models.CharField(max_length=256)
+    min_followers = models.IntegerField(default=0)
+    min_repository = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text
 

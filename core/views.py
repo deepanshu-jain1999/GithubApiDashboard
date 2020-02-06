@@ -3,9 +3,10 @@ from django.views.generic import ListView
 import requests
 from . import forms
 from .serializer import UserSearchSerializer
-from .models import GithubUser
+from .models import GithubUser, AllSearch
 from django.utils import timezone
 # Create your views here.
+
 
 class SearchUser(ListView):
     form_class = forms.UserSearchForm
@@ -21,6 +22,7 @@ class SearchUser(ListView):
             text = form.cleaned_data.get('text')
             min_followers = str(form.cleaned_data.get('min_followers'))
             min_repo = str(form.cleaned_data.get('min_repository'))
+            AllSearch.objects.create(text=text, min_followers=min_followers, min_repository=min_repo)
             url = 'https://api.github.com/search/users?q='
             url += text
             url += '+repos:%3E'+min_repo

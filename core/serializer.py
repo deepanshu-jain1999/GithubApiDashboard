@@ -14,6 +14,6 @@ class UserSearchSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        instance = GithubUser.objects.create_or_update(**validated_data)
+        instance = GithubUser.objects.create(**validated_data)
         return instance
 
