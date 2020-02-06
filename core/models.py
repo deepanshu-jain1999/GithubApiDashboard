@@ -21,6 +21,8 @@ class GithubUser(models.Model):
     received_events_url = models.URLField()
     type = models.CharField(max_length=256)
     site_admin = models.BooleanField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.login
@@ -31,3 +33,6 @@ class GithubUser(models.Model):
         else:
             return '(Sin imagen)'
     image.short_description = 'Thumb'
+
+
+
